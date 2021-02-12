@@ -2,6 +2,6 @@
 
 Clone the Repository
 
-cd to CountryInfo
+cd to current directory
 
 run npm start
