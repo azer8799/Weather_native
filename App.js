@@ -1,21 +1,84 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text,TextInput ,View , TouchableOpacity} from 'react-native';
+import {createAppContainer} from 'react-navigation';
+import {createStackNavigator} from 'react-navigation-stack';
+import axios from 'axios';
+import Details from './Details.js'
+import styles from './style.js'
 
-export default function App() {
+class App extends React.Component {
+
+  constructor(props){
+    super(props);
+    this.state={
+      data:[],
+      text:'',
+    }
+  }
+ 
+      apihandler = async () => {
+        // console.warn(this.state.text)
+        try {
+          const response = await axios.get(
+            `https://restcountries.eu/rest/v2/name/${this.state.text}?fullText=true`,
+          );
+          // alert(JSON.stringify(response.data));
+          // this.setState({data:response.data})
+          console.warn(response.data)
+          let result=response.data,
+          return {
+            result:response.data,
+          }
+        } catch (error) {
+          // handle error
+          alert(error.message);
+        }
+      };
+
+      
+  getInfo(text){
+    // console.warn(text)
+    this.setState({text})
+
+    
+  }
+  render(){
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <View style={styles.container}> 
+      {
+        this.state.data.map((item)=>
+        <Text>Name: {item.name} {"\n"}Population: {item.population} {"\n"}Capital: {item.capital} {"\n"}Latlng: {item.latlng}</Text>
+        )
+
+      }
+
+      <TextInput 
+       underlineColorAndroid = "transparent"
+       placeholder = "Enter Country"
+       placeholderTextColor = "grey"
+      style={styles.input}
+      onChangeText={text => this.getInfo(text)}
+      ></TextInput>
+            <TouchableOpacity
+               style = {styles.submitButton} 
+               onPress = {()=>{this.props.navigation.navigate("WeatherDetails",this.apihandler())}}>
+               <Text style = {styles.submitButtonText}> Submit </Text>
+            </TouchableOpacity>
+            </View>
+            // {text:this.state.text}
   );
 }
+}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+const appNavigator=createStackNavigator({
+  Home:{
+    screen:App,
   },
-});
+  WeatherDetails:{
+    screen:Details
+  }
+})
+
+export default createAppContainer(appNavigator);
+
+
