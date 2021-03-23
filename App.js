@@ -17,13 +17,12 @@ class App extends React.Component {
   }
  
       apihandler = async () => {
-        // console.warn(this.state.text)
+        
         try {
           const response = await axios.get(
             `https://restcountries.eu/rest/v2/name/${this.state.text}?fullText=true`,
           );
-          // alert(JSON.stringify(response.data));
-          // this.setState({data:response.data})
+         
           console.warn(response.data)
           let result=response.data,
           return {
@@ -37,7 +36,7 @@ class App extends React.Component {
 
       
   getInfo(text){
-    // console.warn(text)
+   
     this.setState({text})
 
     
@@ -65,7 +64,7 @@ class App extends React.Component {
                <Text style = {styles.submitButtonText}> Submit </Text>
             </TouchableOpacity>
             </View>
-            // {text:this.state.text}
+            
   );
 }
 }
