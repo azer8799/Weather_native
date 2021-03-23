@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
 } from "react-native";
 import styles from './style.js';
-// import { Card,Title} from 'react-native-paper';
 
 
 
@@ -26,7 +25,6 @@ import styles from './style.js';
      `)
       .then(res=>res.json())
       .then(data=>{
-        // console.log(data)
         this.setState({
           info:{
           temp:data.current.temperature,
@@ -46,17 +44,9 @@ import styles from './style.js';
 
   render(){
       console.warn(this.props.navigation.getParam('result'))
-    // const data = this.props.navigation.state.params
-    // console.log(this.state.info)
     return(
       <View style ={styles.container}> 
-  {/* {
-    this.state.info.map(()=>
-    <Text>Name:  {this.state.info.name} {"\n"} Temp:  {this.state.info.temp}{"\n"}Precipitaion:  {this.state.info.precip}
-      {"\n"} WindSpeed:  {this.state.info.wind}</Text>)
-
-  } */}
-      {/* <Text>NN:{data.text}</Text> */}
+ 
 
        <Image style={{width:50,height:50}}
        source={{uri:'http://openweathermap.org/img/w/'+this.state.info.icon+".png"}}/>
